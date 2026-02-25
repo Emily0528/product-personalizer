@@ -17,8 +17,14 @@ const [currentSize, setCurrentSize] = useState(
   props.sizes?.[0]?.name || ''
 );
 
-console.log('Initial currentColor:', currentColor);
-console.log('Initial currentSize:', currentSize);
+//console.log('Initial currentColor:', currentColor);
+//console.log('Initial currentSize:', currentSize);
+
+  const getPrice = () => {
+    const sizeObj = props.sizes?.find(size => size.name === currentSize);
+    const extra = sizeObj ? sizeObj.additionalPrice : 0;
+    return props.basePrice + extra;
+  }
 
   return (
     <article className={styles.product}>
@@ -32,7 +38,7 @@ console.log('Initial currentSize:', currentSize);
         <header>
           <h2 className={styles.name}>{props.title}</h2>
           <span className={styles.price}>
-            Price: {props.basePrice}$
+            Price: {getPrice()}$
           </span>
         </header>
         <form>
