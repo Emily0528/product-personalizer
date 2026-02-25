@@ -41,10 +41,17 @@ const [currentSize, setCurrentSize] = useState(
             Price: {getPrice()}$
           </span>
         </header>
-        <form>
+        <form onSubmit={(event) => {
+  event.preventDefault(); // zatrzymuje odświeżanie strony
+
+  console.log('Product summary:');
+  console.log('Title:', props.title);
+  console.log('Final Price:', getPrice(), '$');
+  console.log('Selected Color:', currentColor);
+  console.log('Selected Size:', currentSize);
+}}>
           <div className={styles.sizes}>
             <h3 className={styles.optionLabel}>Sizes</h3>
-
             <ul className={styles.choices}>
               {props.sizes?.map(size => (
                 <li key={size.name}>
@@ -58,13 +65,10 @@ const [currentSize, setCurrentSize] = useState(
                 </li>
               ))}
             </ul>
-
           </div>
 
-          {/* KOLORY */}
           <div className={styles.colors}>
             <h3 className={styles.optionLabel}>Colors</h3>
-
             <ul className={styles.choices}>
               {props.colors?.map(color => (
               <li key={color}>
@@ -79,7 +83,6 @@ const [currentSize, setCurrentSize] = useState(
               </li>
               ))}
             </ul>
-
           </div>
           
           <Button className={styles.button}>
