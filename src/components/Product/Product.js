@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useMemo  } from 'react';
 import styles from './Product.module.scss';
 import ProductImage from './ProductImage';
 import ProductForm from './ProductForm';
@@ -20,11 +20,11 @@ const [currentSize, setCurrentSize] = useState(
 //console.log('Initial currentColor:', currentColor);
 //console.log('Initial currentSize:', currentSize);
 
-  const getPrice = () => {
-    const sizeObj = props.sizes?.find(size => size.name === currentSize);
-    const extra = sizeObj ? sizeObj.additionalPrice : 0;
-    return props.basePrice + extra;
-  }
+  const price = useMemo(() => {
+  const sizeObj = props.sizes?.find(size => size.name === currentSize);
+  const extra = sizeObj ? sizeObj.additionalPrice : 0;
+  return props.basePrice + extra;
+}, [currentSize, props.basePrice, props.sizes]);
 
   return (
     <article className={styles.product}>
@@ -41,7 +41,7 @@ const [currentSize, setCurrentSize] = useState(
         currentColor={currentColor}
         setCurrentSize={setCurrentSize}
         setCurrentColor={setCurrentColor}
-        getPrice={getPrice}
+        price={price}
         title={props.title}
       />
       
